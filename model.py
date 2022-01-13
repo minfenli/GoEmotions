@@ -1,5 +1,5 @@
 import torch.nn as nn
-from torch import ones, log, sum, rand_like
+from torch import ones, log, sum, rand_like, cuda
 from transformers import BertPreTrainedModel, BertModel
 
 class BertForMultiLabelClassification(BertPreTrainedModel):
@@ -64,7 +64,7 @@ class BertForMultiLabelClassification(BertPreTrainedModel):
     def init_pos_weight(self, pos_weight):
         if(pos_weight == None or pos_weight.shape[0] != self.num_labels):
             return None
-        return pos_weight.cuda()
+        return pos_weight.cuda() if cuda.is_available() else pos_weight
     def init_focal_loss(self, focal_loss, gamma, alpha, pos_weight):
         if focal_loss:
             return FocalLoss(gamma, alpha, pos_weight)

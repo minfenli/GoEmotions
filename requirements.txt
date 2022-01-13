@@ -3,3 +3,6 @@ sklearn
 torch
 pandas
 numpy
+jupyter
+matplotlib
+seaborn
